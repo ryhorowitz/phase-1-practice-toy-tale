@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const toyFormContainer = document.querySelector(".container");
   const toyCardsConainer = document.querySelector("#toy-collection")
 
-
   addBtn.addEventListener("click", () => {
     // hide & seek with the form
     addToy = !addToy;
@@ -28,14 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       toyFormContainer.style.display = "none";
     }
-
-
   });
 
   function renderCard(toy) {
     const card = document.createElement('div')
     card.className = 'card'
-
+    card.id = toy.id
     card.innerHTML = `  <h2>${toy.name}</h2>
     <img src=${toy.image} class="toy-avatar" />
     <p>${toy.likes}</p>
@@ -47,23 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(toysUrl)
       .then(res => res.json())
       .then(data => data.map(renderCard))
-      // const h2 = document.createElement('h2')
-      // const img = document.createElement('img')
-      // const p = document.createElement('p')
-      // const button = document.createElement('button')
-      // h2.textContent = toy.name
-      // img.src = toy.image
-      // img.className = 'toy-avatar'
-      // p.textContent = toy.likes
-      // button.className = 'like-btn'
-      // button.id = toy.id
-      // button.textContent = 'Like ❤️'
-      // card.append(h2)
-      // h2.append(img)
-      // img.append(p)
-      // p.append(button)
-
-      // add eventListener for click of like button
       .then(cards => cards.forEach(card => {
         const likeBtn = card.childNodes[7]
         console.log(likeBtn.id)
@@ -119,7 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        const cardToUpdate = document.querySelector(`div.card#\\3${data.id}`)
+        let p = cardToUpdate.childNodes[5]
+        p.textContent = increamentedLike.toString()
       })
       .catch(err => console.error(err.message))
 
